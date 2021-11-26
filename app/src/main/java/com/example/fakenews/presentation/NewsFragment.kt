@@ -6,20 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.fakenews.R
 import com.example.fakenews.data.DataSource
+import com.example.fakenews.databinding.Fragment1Binding
 import com.example.fakenews.presentation.recycler.News
 import com.example.fakenews.presentation.recycler.NewsAdapter
-import kotlinx.android.synthetic.main.fragment1.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class NewsFragment : Fragment() {
+class NewsFragment : Fragment(R.layout.fragment1) {
+
+    val binding: Fragment1Binding by viewBinding()
 
     private val onChooseFilter: OnChooseFilter = object : OnChooseFilter {
         override fun chooseFilter(filter: List<News>, selectionInformation: String) {
             viewModel.loadMessages(filter)
 
-            textView.text = selectionInformation
+            binding.textView.text = selectionInformation
         }
     }
 
@@ -49,9 +52,9 @@ class NewsFragment : Fragment() {
 
         initObserves()
 
-        list.adapter = adapter
+        binding.list.adapter = adapter
 
-        imageView.setOnClickListener {
+        binding.imageView.setOnClickListener {
             radioGroupFragment.show(childFragmentManager, RadioGroupFragment.TAG)
         }
 
@@ -61,7 +64,7 @@ class NewsFragment : Fragment() {
     private fun initObserves() {
         viewModel.onFilterChoose.observe(viewLifecycleOwner) { messages ->
             adapter.submitList(messages)
-            list.layoutManager =
+            binding.list.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }

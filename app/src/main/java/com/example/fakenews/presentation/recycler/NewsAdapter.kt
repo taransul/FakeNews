@@ -29,5 +29,4 @@ class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
         items = data
         notifyDataSetChanged()
     }
-
 }

@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.fakenews.R
 import com.example.fakenews.data.DataSource
+import com.example.fakenews.databinding.Fragment2Binding
 import com.example.fakenews.presentation.enums.AuthorEnum
 import com.example.fakenews.presentation.enums.DateEnum
 import com.example.fakenews.presentation.enums.TopicEnum
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment2.*
 
 class RadioGroupFragment(
     private val onChooseFilter: OnChooseFilter
 ) : BottomSheetDialogFragment() {
+
+    private val binding: Fragment2Binding by viewBinding()
 
     private val dataSource by lazy { DataSource() }
 
@@ -38,21 +41,21 @@ class RadioGroupFragment(
 
     private fun initRadioGroup() {
 
-        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.topicRadioButton -> {
 
-                    dateRadioButton.visibility = View.GONE
-                    authorRadioButton.visibility = View.GONE
+                    binding.dateRadioButton.visibility = View.GONE
+                    binding.authorRadioButton.visibility = View.GONE
 
-                    radioGroup2.visibility = View.VISIBLE
+                    binding.radioGroup2.visibility = View.VISIBLE
 
-                    radioButton1.text = TopicEnum.GAME.topic
-                    radioButton2.text = TopicEnum.ECONOMY.topic
-                    radioButton3.text = TopicEnum.TECHNOLOGIES.topic
-                    radioButton4.text = TopicEnum.POLITICS.topic
+                    binding.radioButton1.text = TopicEnum.GAME.topic
+                    binding.radioButton2.text = TopicEnum.ECONOMY.topic
+                    binding.radioButton3.text = TopicEnum.TECHNOLOGIES.topic
+                    binding.radioButton4.text = TopicEnum.POLITICS.topic
 
-                    radioGroup2.setOnCheckedChangeListener { _, checkedId2 ->
+                    binding.radioGroup2.setOnCheckedChangeListener { _, checkedId2 ->
                         when (checkedId2) {
                             R.id.radioButton1 -> {
                                 passFilterTopic(TopicEnum.GAME.topic)
@@ -72,17 +75,17 @@ class RadioGroupFragment(
 
                 R.id.authorRadioButton -> {
 
-                    dateRadioButton.visibility = View.GONE
-                    topicRadioButton.visibility = View.GONE
+                    binding.dateRadioButton.visibility = View.GONE
+                    binding.topicRadioButton.visibility = View.GONE
 
-                    radioGroup2.visibility = View.VISIBLE
+                    binding.radioGroup2.visibility = View.VISIBLE
 
-                    radioButton1.text = AuthorEnum.AUTHOR1.author
-                    radioButton2.text = AuthorEnum.AUTHOR2.author
-                    radioButton3.text = AuthorEnum.AUTHOR3.author
-                    radioButton4.text = AuthorEnum.AUTHOR4.author
+                    binding.radioButton1.text = AuthorEnum.AUTHOR1.author
+                    binding.radioButton2.text = AuthorEnum.AUTHOR2.author
+                    binding.radioButton3.text = AuthorEnum.AUTHOR3.author
+                    binding.radioButton4.text = AuthorEnum.AUTHOR4.author
 
-                    radioGroup2.setOnCheckedChangeListener { _, checkedId2 ->
+                    binding.radioGroup2.setOnCheckedChangeListener { _, checkedId2 ->
                         when (checkedId2) {
                             R.id.radioButton1 -> {
                                 passFilterAuthor(AuthorEnum.AUTHOR1.author)
@@ -102,17 +105,17 @@ class RadioGroupFragment(
 
                 R.id.dateRadioButton -> {
 
-                    authorRadioButton.visibility = View.GONE
-                    topicRadioButton.visibility = View.GONE
+                    binding.authorRadioButton.visibility = View.GONE
+                    binding.topicRadioButton.visibility = View.GONE
 
-                    radioGroup2.visibility = View.VISIBLE
+                    binding.radioGroup2.visibility = View.VISIBLE
 
-                    radioButton1.text = DateEnum.TODAY.date
-                    radioButton2.text = DateEnum.RECENTLY.date
-                    radioButton3.text = DateEnum.WEEK.date
-                    radioButton4.text = DateEnum.OLD.date
+                    binding.radioButton1.text = DateEnum.TODAY.date
+                    binding.radioButton2.text = DateEnum.RECENTLY.date
+                    binding.radioButton3.text = DateEnum.WEEK.date
+                    binding.radioButton4.text = DateEnum.OLD.date
 
-                    radioGroup2.setOnCheckedChangeListener { _, checkedId2 ->
+                    binding.radioGroup2.setOnCheckedChangeListener { _, checkedId2 ->
                         when (checkedId2) {
                             R.id.radioButton1 -> {
                                 passFilterDate(DateEnum.TODAY.date)
@@ -138,7 +141,7 @@ class RadioGroupFragment(
             dataSource.list.filter { it.topic == enumString }, enumString
         )
         dismiss()
-        radioGroup.clearCheck()
+        binding.radioGroup.clearCheck()
     }
 
     private fun passFilterAuthor(enumString: String) {
@@ -146,7 +149,7 @@ class RadioGroupFragment(
             dataSource.list.filter { it.author == enumString }, enumString
         )
         dismiss()
-        radioGroup.clearCheck()
+        binding.radioGroup.clearCheck()
     }
 
     private fun passFilterDate(enumString: String) {
@@ -154,6 +157,6 @@ class RadioGroupFragment(
             dataSource.list.filter { it.date == enumString }, enumString
         )
         dismiss()
-        radioGroup.clearCheck()
+        binding.radioGroup.clearCheck()
     }
 }
