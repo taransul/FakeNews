@@ -25,11 +25,11 @@
         android:layout_alignBottom="@+id/topicTextView"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="70dp"
         android:layout_marginBottom="0dp"
         android:text="@string/no_data_available"
-        tools:text="date"
-        tools:ignore="RelativeOverlap" />
+        tools:ignore="RelativeOverlap"
+        tools:text="date" />
 
     <TextView
         android:id="@+id/titleTextView"

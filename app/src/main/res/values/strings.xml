@@ -5,4 +5,9 @@
     <string name="topic">сортировать по теме</string>
     <string name="author">сортировать по автору</string>
     <string name="textNews">Новости</string>
+    <string name="radiobutton1">RadioButton1</string>
+    <string name="radiobutton2">RadioButton2</string>
+    <string name="radiobutton3">RadioButton3</string>
+    <string name="radiobutton4">RadioButton4</string>
+    <string name="sort">Сортировка</string>
 </resources>
