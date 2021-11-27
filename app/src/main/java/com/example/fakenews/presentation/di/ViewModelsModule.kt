@@ -1,5 +1,6 @@
 package com.example.fakenews.presentation.di
 
+import com.example.fakenews.data.di.DATA_SOURCE_LIST
 import com.example.fakenews.data.di.DATA_SOURCE_QUALIFIER
 import com.example.fakenews.presentation.NewsFragmentViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -9,7 +10,8 @@ val viewModelsModule = module {
 
     viewModel {
         NewsFragmentViewModel(
-            interactor = get(qualifier = DATA_SOURCE_QUALIFIER)
+            interactor = get(qualifier = DATA_SOURCE_QUALIFIER),
+            interactor2 = get(qualifier = DATA_SOURCE_LIST)
         )
     }
 }

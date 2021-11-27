@@ -1,32 +1,35 @@
 package com.example.fakenews.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.fakenews.R
 import com.example.fakenews.data.DataSource
 import com.example.fakenews.databinding.Fragment1Binding
+import com.example.fakenews.domain.NewsInteractor
 import com.example.fakenews.presentation.recycler.News
 import com.example.fakenews.presentation.recycler.NewsAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class NewsFragment : Fragment(R.layout.fragment1) {
+class NewsFragment : Fragment(R.layout.fragment1),NewsInteractor {
 
-    val binding: Fragment1Binding by viewBinding()
+    override fun loadMessages(filter: List<News>): List<News> {
+        return filter
+    }
 
-    private val onChooseFilter: OnChooseFilter = object : OnChooseFilter {
-        override fun chooseFilter(filter: List<News>, selectionInformation: String) {
+        val binding: Fragment1Binding by viewBinding(Fragment1Binding::bind)
+
+    private val transmittingFilteredList: TransmittingFilteredList = object : TransmittingFilteredList {
+        override fun passesFilteredList(filter: List<News>, selectionInformation: String) {
             viewModel.loadMessages(filter)
 
             binding.textView.text = selectionInformation
         }
     }
 
-    private val radioGroupFragment = RadioGroupFragment.newInstance2(onChooseFilter)
+    private val radioGroupFragment = RadioGroupFragment.newInstance2(transmittingFilteredList)
 
     companion object {
         fun newInstance() = NewsFragment()
@@ -39,14 +42,6 @@ class NewsFragment : Fragment(R.layout.fragment1) {
 
     private val viewModel: NewsFragmentViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(
-        R.layout.fragment1, container, false
-    )
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,11 +53,11 @@ class NewsFragment : Fragment(R.layout.fragment1) {
             radioGroupFragment.show(childFragmentManager, RadioGroupFragment.TAG)
         }
 
-        viewModel.loadMessages(dataSource.list)
+        viewModel.loadMessages(dataSource.newsList())
     }
 
     private fun initObserves() {
-        viewModel.onFilterChoose.observe(viewLifecycleOwner) { messages ->
+        viewModel.transmittingFilteredList.observe(viewLifecycleOwner) { messages ->
             adapter.submitList(messages)
             binding.list.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
