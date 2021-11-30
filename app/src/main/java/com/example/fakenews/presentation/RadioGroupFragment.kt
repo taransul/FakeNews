@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.fakenews.R
-import com.example.fakenews.data.DataSource
 import com.example.fakenews.databinding.Fragment2Binding
 import com.example.fakenews.presentation.enums.AuthorEnum
 import com.example.fakenews.presentation.enums.DateEnum
@@ -168,7 +167,7 @@ class RadioGroupFragment(
     }
 
     private fun initObserveList() {
-        viewModel.copyList()
+        viewModel.newsList()
         viewModel.newsList.observe(viewLifecycleOwner) { list ->
             copyList = list
         }

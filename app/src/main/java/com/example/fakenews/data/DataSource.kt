@@ -1,14 +1,18 @@
 package com.example.fakenews.data
 
-import com.example.fakenews.domain.DataSourceInteractor
+import com.example.fakenews.domain.NewsInteractor
 import com.example.fakenews.presentation.recycler.News
 
-class DataSource: DataSourceInteractor {
+class DataSource : NewsInteractor {
+    override fun loadMessages(filter: List<News>): List<News> {
+        return filter
+    }
+
     override fun newsList(): List<News> {
         return list
     }
 
-   private val list: List<News> = listOf(
+    private val list: List<News> = listOf(
         News(
             "title1",
             "author1",

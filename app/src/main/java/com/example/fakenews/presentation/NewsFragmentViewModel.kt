@@ -4,14 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fakenews.domain.DataSourceInteractor
 import com.example.fakenews.domain.NewsInteractor
 import com.example.fakenews.presentation.recycler.News
 import kotlinx.coroutines.launch
 
 class NewsFragmentViewModel(
-    private val interactor: NewsInteractor,
-    private val interactor2: DataSourceInteractor
+    private val interactor: NewsInteractor
 ) : ViewModel() {
 
     private val _transmittingFilteredList = MutableLiveData<List<News>>()
@@ -26,9 +24,9 @@ class NewsFragmentViewModel(
         }
     }
 
-    fun copyList() {
+    fun newsList() {
         viewModelScope.launch {
-            _newsList.value = interactor2.newsList()
+            _newsList.value = interactor.newsList()
         }
     }
 }
