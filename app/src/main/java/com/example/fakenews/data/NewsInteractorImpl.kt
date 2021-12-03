@@ -1,12 +1,13 @@
 package com.example.fakenews.data
 
 import com.example.fakenews.data.storage.NewsDao
-import com.example.fakenews.domain.NewsInteractor2
+import com.example.fakenews.domain.NewsInteractor
+import com.example.fakenews.domain.NewsInteractorRoom
 import com.example.fakenews.presentation.recycler.News
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class NewsInteractorImpl(private val newsDao: NewsDao) : NewsInteractor2 {
+class NewsInteractorImpl(private val newsDao: NewsDao) : NewsInteractorRoom{
     override suspend fun getNews(): List<News> {
         return withContext(Dispatchers.IO) {
             newsDao.getAll().map { newsEntity -> newsEntity.toUser() }

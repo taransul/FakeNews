@@ -5,12 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.fakenews.R
 import com.example.fakenews.databinding.ActivityMainBinding
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding: ActivityMainBinding by viewBinding()
-
-    private val userViewModel by viewModel<UserViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,18 +17,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onStart() {
         super.onStart()
         openFragment()
-
-        binding.floatingActionButtonLoad.setOnClickListener {
-            userViewModel.loadNews()
-        }
-        binding.floatingActionButtonInsert.setOnClickListener {
-            userViewModel.insertNews()
-        }
-//        userViewModel.users.observe(this) { users ->
-//            Log.e("my", users.toString())
-//        }
     }
-
 
     private fun openFragment() {
         supportFragmentManager

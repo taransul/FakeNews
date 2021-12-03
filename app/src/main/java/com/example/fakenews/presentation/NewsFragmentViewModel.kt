@@ -12,15 +12,15 @@ class NewsFragmentViewModel(
     private val interactor: NewsInteractor
 ) : ViewModel() {
 
-    private val _transmittingFilteredList = MutableLiveData<List<News>>()
-    val transmittingFilteredList: LiveData<List<News>> get() = _transmittingFilteredList
+    private val _passesListViewModel = MutableLiveData<List<News>>()
+    val passesListViewModel: LiveData<List<News>> get() = _passesListViewModel
 
     private val _newsList = MutableLiveData<List<News>>()
     val newsList: LiveData<List<News>> get() = _newsList
 
     fun loadMessages(filter: List<News>) {
         viewModelScope.launch {
-            _transmittingFilteredList.value = interactor.loadMessages(filter)
+            _passesListViewModel.value = interactor.loadMessages(filter)
         }
     }
 

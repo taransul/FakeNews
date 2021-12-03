@@ -1,6 +1,7 @@
 package com.example.fakenews.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -16,17 +17,18 @@ class NewsFragment : Fragment(R.layout.fragment1) {
 
     private val adapter by lazy { NewsAdapter() }
     private val viewModel by viewModel<NewsFragmentViewModel>()
+    private val userViewModel by viewModel<NewsViewModelRoom>()
 
     val binding: Fragment1Binding by viewBinding(Fragment1Binding::bind)
 
-    private val transmittingFilteredList: TransmittingFilteredList =
-        object : TransmittingFilteredList {
-            override fun passesFilteredList(filter: List<News>, selectionInformation: String) {
+    private val passesList: PassesList =
+        object : PassesList {
+            override fun displaysListOnScreen(filter: List<News>, selectionInformation: String) {
                 viewModel.loadMessages(filter)
                 binding.textView.text = selectionInformation
             }
         }
-    private val radioGroupFragment = RadioGroupFragment.newInstance2(transmittingFilteredList)
+    private val radioGroupFragment = RadioGroupFragment.newInstance2(passesList)
 
     companion object {
         fun newInstance() = NewsFragment()
@@ -36,12 +38,25 @@ class NewsFragment : Fragment(R.layout.fragment1) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initObserves(viewModel.transmittingFilteredList)
+        initObserves(viewModel.passesListViewModel)
         initObserves(viewModel.newsList)
         viewModel.newsList()
         binding.list.adapter = adapter
         binding.imageView.setOnClickListener {
             radioGroupFragment.show(childFragmentManager, RadioGroupFragment.TAG)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.floatingActionButtonInsertLoad.setOnClickListener {
+            userViewModel.insertNews()
+            userViewModel.loadNews()
+
+            userViewModel.newsLoad.observe(this) { news ->
+                passesList.displaysListOnScreen(news, "local ")
+                Log.e("my", news.toString())
+            }
         }
     }
 

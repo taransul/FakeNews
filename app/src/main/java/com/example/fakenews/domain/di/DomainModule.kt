@@ -1,11 +1,11 @@
 package com.example.fakenews.domain.di
 
 import com.example.fakenews.data.NewsInteractorImpl
-import com.example.fakenews.domain.NewsInteractor2
+import com.example.fakenews.domain.NewsInteractorRoom
 import org.koin.dsl.module
 
 val domainModule = module {
-    single<NewsInteractor2> {
+    single<NewsInteractorRoom> {
         NewsInteractorImpl(newsDao = get())
     }
 }

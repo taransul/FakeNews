@@ -2,7 +2,7 @@ package com.example.fakenews.presentation.di
 
 import com.example.fakenews.data.di.DATA_SOURCE_QUALIFIER
 import com.example.fakenews.presentation.NewsFragmentViewModel
-import com.example.fakenews.presentation.UserViewModel
+import com.example.fakenews.presentation.NewsViewModelRoom
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -14,6 +14,6 @@ val viewModelsModule = module {
         )
     }
     viewModel {
-        UserViewModel(get())
+        NewsViewModelRoom(get())
     }
 }

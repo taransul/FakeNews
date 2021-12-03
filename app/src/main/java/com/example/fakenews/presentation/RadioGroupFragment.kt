@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RadioGroupFragment(
-    private val transmittingFilteredList: TransmittingFilteredList
+    private val passesList: PassesList
 ) : BottomSheetDialogFragment() {
 
     private val binding: Fragment2Binding by viewBinding()
@@ -26,8 +26,8 @@ class RadioGroupFragment(
     companion object {
         const val TAG = "FirstFragment"
 
-        fun newInstance2(transmittingFilteredList: TransmittingFilteredList) =
-            RadioGroupFragment(transmittingFilteredList)
+        fun newInstance2(passesList: PassesList) =
+            RadioGroupFragment(passesList)
     }
 
     override fun onCreateView(
@@ -142,7 +142,7 @@ class RadioGroupFragment(
     }
 
     private fun passFilterTopic(enumString: String) {
-        transmittingFilteredList.passesFilteredList(
+        passesList.displaysListOnScreen(
             copyList.filter { it.topic == enumString }, enumString
         )
         dismiss()
@@ -150,7 +150,7 @@ class RadioGroupFragment(
     }
 
     private fun passFilterAuthor(enumString: String) {
-        transmittingFilteredList.passesFilteredList(
+        passesList.displaysListOnScreen(
 
             copyList.filter { it.author == enumString }, enumString
         )
@@ -159,7 +159,7 @@ class RadioGroupFragment(
     }
 
     private fun passFilterDate(enumString: String) {
-        transmittingFilteredList.passesFilteredList(
+        passesList.displaysListOnScreen(
             copyList.filter { it.date == enumString }, enumString
         )
         dismiss()
