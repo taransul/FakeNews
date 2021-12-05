@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.fakenews.R
 import com.example.fakenews.databinding.Fragment2Binding
@@ -26,7 +27,7 @@ class RadioGroupFragment(
     companion object {
         const val TAG = "FirstFragment"
 
-        fun newInstance2(passesList: PassesList) =
+        fun newInstanceRadioGroup(passesList: PassesList) =
             RadioGroupFragment(passesList)
     }
 
@@ -41,6 +42,13 @@ class RadioGroupFragment(
         initObserveList()
         initRadioGroup()
 
+        binding.buttonRadioGroupFragment.setOnClickListener {
+            findNavController().navigate(
+                RadioGroupFragmentDirections.actionRadioGroupFragmentToNewsFragment(
+                    News("title", "author", "date", "topic", "text")
+                )
+            )
+        }
     }
 
     private fun initRadioGroup() {
@@ -151,7 +159,6 @@ class RadioGroupFragment(
 
     private fun passFilterAuthor(enumString: String) {
         passesList.displaysListOnScreen(
-
             copyList.filter { it.author == enumString }, enumString
         )
         dismiss()

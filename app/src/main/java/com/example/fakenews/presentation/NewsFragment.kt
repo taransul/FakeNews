@@ -3,8 +3,10 @@ package com.example.fakenews.presentation
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.fakenews.R
@@ -14,6 +16,9 @@ import com.example.fakenews.presentation.recycler.NewsAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewsFragment : Fragment(R.layout.fragment1) {
+
+
+    private val navArgs by navArgs<NewsFragmentArgs>()
 
     private val adapter by lazy { NewsAdapter() }
     private val viewModel by viewModel<NewsFragmentViewModel>()
@@ -28,7 +33,7 @@ class NewsFragment : Fragment(R.layout.fragment1) {
                 binding.textView.text = selectionInformation
             }
         }
-    private val radioGroupFragment = RadioGroupFragment.newInstance2(passesList)
+    private val radioGroupFragment = RadioGroupFragment.newInstanceRadioGroup(passesList)
 
     companion object {
         fun newInstance() = NewsFragment()
@@ -37,6 +42,9 @@ class NewsFragment : Fragment(R.layout.fragment1) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.list.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         initObserves(viewModel.passesListViewModel)
         initObserves(viewModel.newsList)
@@ -49,6 +57,10 @@ class NewsFragment : Fragment(R.layout.fragment1) {
 
     override fun onStart() {
         super.onStart()
+        binding.textView2.setOnClickListener {
+            Toast.makeText(requireContext(), navArgs.newsArgsNewsFragment?.topic.orEmpty(), Toast.LENGTH_LONG).show()
+        }
+
         binding.floatingActionButtonInsertLoad.setOnClickListener {
             userViewModel.insertNews()
             userViewModel.loadNews()
@@ -63,8 +75,6 @@ class NewsFragment : Fragment(R.layout.fragment1) {
     private fun initObserves(observeLiveData: LiveData<List<News>>) {
         observeLiveData.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
-            binding.list.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
 }

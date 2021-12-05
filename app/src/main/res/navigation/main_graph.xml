@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/newsFragment">
+
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.fakenews.presentation.NewsFragment"
+        android:label="NewsFragment">
+        <action
+            android:id="@+id/action_newsFragment_to_radioGroupFragment"
+            app:destination="@id/radioGroupFragment" />
+        <argument
+            android:name="newsArgsNewsFragment"
+            app:argType="com.example.fakenews.presentation.recycler.News"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/radioGroupFragment"
+        android:name="com.example.fakenews.presentation.RadioGroupFragment"
+        android:label="RadioGroupFragment"
+        tools:layout="@layout/fragment2">
+        <action
+            android:id="@+id/action_radioGroupFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+        <argument
+            android:name="newsArgsRadioGroupFragment"
+            app:argType="com.example.fakenews.presentation.recycler.News"
+            app:nullable="true" />
+
+    </fragment>
+</navigation>
